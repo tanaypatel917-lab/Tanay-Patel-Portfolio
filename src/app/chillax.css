@@ -1,0 +1,15 @@
+@font-face {
+  font-family: 'Uncut Sans';
+  src: url('/fonts/uncut-sans/UncutSans-Variable.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Steps Mono';
+  src: url('/fonts/steps-mono/Steps-Mono.otf') format('opentype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}

@@ -1,0 +1,113 @@
+function Rm({
+scale:u=6,portraitSrc:n,portraitOnly:r=!1,className:s=""}
+){
+const o=Ce.useRef(null),a=vD();
+return Ce.useEffect(()=>{
+const c=o.current;
+if(!c)return;
+const d=c.getContext("2d");
+if(!d)return;
+let p=0,m=!1,g=!0,_=!1,y=0,D=0,S=null,w=null,T=null;
+const O=[.12,.26,.44,.66].map(J=>[Math.round(If[0]*J),Math.round(If[1]*J),Math.round(If[2]*J)]),L={
+x:-1e4,y:-1e4}
+,P=new Image;
+let R=!1;
+n&&(P.crossOrigin="anonymous",P.onload=()=>{
+R=!0,H(),a&&U(0)}
+,P.src=n);
+const H=()=>{
+if(!R||!y)return;
+const J=document.createElement("canvas");
+J.width=y,J.height=D;
+const ee=J.getContext("2d");
+if(!ee)return;
+const q=y*.42,V=y*.58,X=Math.max(V/P.naturalWidth,D/P.naturalHeight),E=P.naturalWidth*X,C=P.naturalHeight*X,oe=E>=y?y/2-.57*E:Math.min(y-E,q+(V-E)/2+y*.15);
+ee.drawImage(P,oe,(D-C)*.32,E,C);
+let ie;
+try{
+ie=ee.getImageData(0,0,y,D).data}
+catch{
+return}
+w=new Float32Array(y*D),T=new Float32Array(y*D);
+for(let me=0;
+me<y*D;
+me++){
+const Ve=ie[me*4+3]/255;
+T[me]=Ve,w[me]=(ie[me*4]*.2126+ie[me*4+1]*.7152+ie[me*4+2]*.0722)/255*Ve}
+const de=Float32Array.from(w).sort(),pe=de[Math.floor(de.length*.45)],ye=de[Math.floor(de.length*.97)],Ee=Math.max(.05,ye-pe);
+for(let me=0;
+me<w.length;
+me++)w[me]=Math.pow(Math.min(1,Math.max(0,(w[me]-pe)/Ee)),.85)}
+,b=()=>{
+const J=c.getBoundingClientRect();
+y=Math.max(1,Math.round(J.width/u)),D=Math.max(1,Math.round(J.height/u)),c.width=y,c.height=D,S=d.createImageData(y,D);
+const ee=S.data;
+for(let q=3;
+q<ee.length;
+q+=4)ee[q]=255;
+H()}
+,U=J=>{
+if(!S)return;
+const ee=S.data,q=J*5e-4,V=L.x/u,X=L.y/u;
+for(let E=0;
+E<D;
+E++)for(let C=0;
+C<y;
+C++){
+const j=E*y+C,oe=j*4;
+if(r){
+if(!T||T[j]<=.02){
+ee[oe+3]=0;
+continue}
+ee[oe+3]=255}
+const ie=C+6*Math.sin(E*.08+q*.6),de=E+6*Math.cos(C*.09-q*.5);
+let pe=Math.sin(ie*.09+q*.9)+Math.sin(de*.11-q*.7)+Math.sin((ie+de)*.06+q*.5);
+pe=pe/3*.5+.12;
+const ye=C-V,Ee=E-X,me=ye*ye+Ee*Ee;
+me<1100&&(pe+=(1-me/1100)*.4);
+let Ve=0;
+if(w&&T&&T[j]>.01){
+let gt=Math.min(1,Math.max(0,(C/y-.5)/.32));
+r&&(gt=Math.max(gt,.88)),Ve=gt*T[j],pe=pe*(1-Ve)+w[j]*Ve}
+const dt=u2[E&7][C&7]/64-.5,Et=a2(C,E)-.5,Fe=pe+(dt*.62+Et*.55)*.5;
+let Be;
+if(Fe>.82&&Ve>.22)Be=O[3];
+else if(Fe>.52)Be=O[2];
+else if(Fe>.36)Be=O[1];
+else if(Fe>.2)Be=O[0];
+else{
+ee[oe]=14,ee[oe+1]=14,ee[oe+2]=14;
+continue}
+ee[oe]=Be[0],ee[oe+1]=Be[1],ee[oe+2]=Be[2]}
+d.putImageData(S,0,0)}
+,Y=J=>{
+if(m||!g){
+_=!1;
+return}
+U(J),p=requestAnimationFrame(Y)}
+,W=()=>{
+_||m||a||(_=!0,p=requestAnimationFrame(Y))}
+,ce=J=>{
+const ee=c.getBoundingClientRect();
+L.x=J.clientX-ee.left,L.y=J.clientY-ee.top}
+,G=()=>{
+L.x=-1e4,L.y=-1e4}
+;
+b(),a?U(0):(W(),window.addEventListener("pointermove",ce,{
+passive:!0}
+),c.addEventListener("pointerleave",G));
+const te=new IntersectionObserver(([J])=>{
+g=J.isIntersecting,g&&W()}
+);
+te.observe(c);
+const re=new ResizeObserver(()=>{
+b(),a&&U(0)}
+);
+return re.observe(c),()=>{
+m=!0,cancelAnimationFrame(p),te.disconnect(),re.disconnect(),window.removeEventListener("pointermove",ce),c.removeEventListener("pointerleave",G)}
+}
+,[u,n,a]),N.jsx("canvas",{
+ref:o,"aria-hidden":!0,className:`block size-full [image-rendering:pixelated] ${
+s}
+`}
+)}
