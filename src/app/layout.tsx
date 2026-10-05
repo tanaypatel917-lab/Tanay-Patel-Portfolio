@@ -38,10 +38,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preload" href="/fonts/overused-grotesk/OverusedGrotesk-VF.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href="/fonts/redaction/Redaction-Italic.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-      </head>
       <body>
         {/* Semantic content remains visible without JavaScript or animation. */}
         <noscript>

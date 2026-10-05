@@ -5,6 +5,7 @@ import { InteractiveDitherPortrait, type DitherPortraitHandle } from '@/componen
 import { Emphasis } from './Emphasis';
 import { IntroSequence } from './IntroSequence';
 import { portfolioContent } from '@/content/portfolio';
+import { asset } from '@/lib/asset';
 import { gsap } from '@/lib/motion';
 import { useMotion } from '@/components/shared/MotionProvider';
 import type { IntroPhase } from '@/lib/intro';
@@ -98,7 +99,7 @@ export function Hero() {
       </div>
 
       <div ref={portraitElement} className="hero__portrait">
-        <InteractiveDitherPortrait ref={portraitRef} src="/images/tanay-headshot.jpg" alt={`Portrait of ${identity.name}`} className="hero__portrait-frame" detailRef={detailRef} holdCoarse />
+        <InteractiveDitherPortrait ref={portraitRef} src={asset('/images/tanay-headshot.jpg')} alt={`Portrait of ${identity.name}`} className="hero__portrait-frame" detailRef={detailRef} holdCoarse />
         <p className="hero__portrait-note mono">{identity.currentStatus}</p>
       </div>
 

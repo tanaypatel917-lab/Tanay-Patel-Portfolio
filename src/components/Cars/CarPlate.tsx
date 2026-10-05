@@ -5,6 +5,7 @@ import { Component, Suspense, lazy, useCallback, useEffect, useId, useMemo, useR
 import { CarInspectionControls } from './CarInspectionControls';
 import type { ProgressSource } from './progress';
 import { portfolioContent } from '@/content/portfolio';
+import { asset } from '@/lib/asset';
 import { clampInspectionZoom, nextCarMode, type CarMode, type InspectionCommand, type InspectionView } from '@/lib/car-camera';
 
 // Three.js and the 4 MB model stay out of the initial bundle and only load
@@ -229,7 +230,7 @@ export function CarPlate({ progress, speedRef, reduced, active, caption, onReady
         <div className="cars__poster" aria-hidden={showScene}>
           {posterFailed ? <p className="mono cars__poster-label">{caption}</p> : (
             <Image
-              src="/images/car-night.webp"
+              src={asset('/images/car-night.webp')}
               alt={caption}
               fill
               unoptimized

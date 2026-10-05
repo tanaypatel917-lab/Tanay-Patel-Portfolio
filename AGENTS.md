@@ -11,6 +11,11 @@ motion, Lenis for inertia scrolling, Canvas 2D for the dither portrait.
 - `npm run lint` - `next lint` (one pre-existing warning in `src/components/Landing/PhotoReveal.tsx`, not in the route)
 - `npm run build` - production build; stop `next dev` first, both write to `.next/`
 - `npm run start -- -p 3000` - serve the production build (kill the previous `next-server` first or it fails with EADDRINUSE and the old build keeps serving)
+- Deploy: pushing to `main` runs `.github/workflows/pages.yml`, a static export (`STATIC_EXPORT=true`,
+  `PAGES_BASE_PATH=/Tanay-Patel-Portfolio`) to https://tanaypatel917-lab.github.io/Tanay-Patel-Portfolio/.
+  Reference `/public` files through `asset()` from `src/lib/asset.ts`; in CSS use paths relative to the
+  stylesheet (`../../public/...`) so webpack prefixes the base path. Bare `/...` paths 404 on Pages.
+  `.playwright-mcp/` is gitignored because its logs contained an OAuth token.
 
 ## Delivered route
 

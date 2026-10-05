@@ -3,6 +3,7 @@
 import { useRef, useLayoutEffect } from 'react';
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
+import { asset } from '@/lib/asset';
 
 interface CarModelProps {
   /** glTF path. The delivered file uses EXT_meshopt_compression, decoded locally by drei. */
@@ -78,11 +79,11 @@ function patchMaterial(material: THREE.Material) {
 
 const loadedModels = new Set<string>();
 
-export function retryFailedCarModel(src = '/models/car-web.glb') {
+export function retryFailedCarModel(src = asset('/models/car-web.glb')) {
   if (!loadedModels.has(src)) useGLTF.clear(src);
 }
 
-export function CarModel({ src = '/models/car-web.glb', onSceneReady }: CarModelProps) {
+export function CarModel({ src = asset('/models/car-web.glb'), onSceneReady }: CarModelProps) {
   // No Draco (drei would point at a Google CDN for the decoder); meshopt decodes from the bundle.
   const { scene } = useGLTF(src, false, true);
   const root = useRef<THREE.Group>(null);
